@@ -1,0 +1,18 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+{%block body%}
+{% import "bootstrap/utils.html" as utils %}
+
+ <div  style="padding-top:7rem;"  class="container">
+
+  <br/> {{ utils.flashed_messages() }}
+<br/>
+<hr>
+{{ wtf.quick_form(form) }}
+<hr>
+
+<a href="{{ url_for('auth.login', action='off')}}">Login</a>
+</div>
+
+{%endblock%}
+

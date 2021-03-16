@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Automotive Car Design</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+        />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+              <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="homepage.css") }}"/>
+
+        <script src="script.js"></script>
+    </head>
+    <body>
+
+        <div class="container-fluid">
+
+            <div class="row">
+
+                <div class="col-lg-3 col-md-3 col-sm-12 col-12 sidenav">
+                   
+                         
+                        <div id="plateNumbb" class="container pass">
+                                           
+                        </div>
+                    
+                </div>
+
+
+                <div class="col-lg-9 col-md-9 col-sm-9 col-9">
+                   
+                    <div class="container-fluid">
+
+                        <div class="row">
+                            
+                            <div class="col">
+                                
+                                <div class="plate">
+                                    <img id="plateCam" src="{{ url_for('admin.video_feed', action='off')}}">
+                                </div>
+
+                            </div>
+                            <div class="col">
+                                <div class="stream">
+                                    <img id="framCam" src="{{ url_for('admin.camera', action='off')}}">
+
+                                </div>
+                            </div>
+                            <div class="w-100"></div>
+                            <div class="col">
+                                <div class="acc">
+                                    <div class="conf">
+                                        <div class="c">
+                                            Confidence
+                                        </div>
+                                        <div class="cr">
+                                            97%
+                                        </div>
+                                      
+                                    </div>
+                                    <div class="time">
+                                        <div class="t">
+                                            Time
+                                        </div>
+            
+                                        <div class="tr">
+                                            11:12:14
+                                        </div>
+            
+                                    </div>
+                                    <div class="date"> 
+                                        <div class="d">
+                                            date
+                                        </div>
+                                        <div class="dr">
+                                            2021
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="col">
+                            
+                            </div>
+                    
+                        </div>
+
+                                              
+                        <div class="row">
+
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-12">
+                                    <button id="cam1" type="button" class="btn btn-primary">Camera 1</button>                                </div>
+    
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-12">
+                                    <button type="button" class="btn btn-primary">Camera 2</button>    
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-12">
+                                    <button type="button" class="btn btn-primary">Camera 3</button>    
+                                </div>
+
+                        </div>
+                </div>
+
+            </div>
+
+        </div>
+
+      
+        <nav class="navbar fixed-bottom navbar-expand-sm navbar-light bg-light">
+           
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+              <ul class="navbar-nav mr-auto">
+            
+                <li class="nav-item">
+                  <a class="nav-link" href="#">  <i class="fas fa-video"></i></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">  <i class="fas fa-camera"></i></a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">  <i class="far fa-circle"></i></a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">  <i class="fas fa-exclamation-triangle"></i></a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">                    <i class="far fa-bell"></i>
+                    </a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">                    <i class="far fa-bell"></i>
+                    </a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">                    <i class="far fa-bell"></i>
+                    </a>
+                  </li>
+
+              </ul>
+            </div>
+          </nav>
+
+
+<script>
+
+setInterval(function(){
+  var date = new Date();
+  var format = "YYYY-MMM-DD DDD";
+  dateConvert(date,format)
+}, 1);
+
+var date ="";
+
+function dateConvert(dateobj,format){
+ var year = dateobj.getFullYear();
+ var month= ("0" + (dateobj.getMonth()+1)).slice(-2);
+ var date = ("0" + dateobj.getDate()).slice(-2);
+ var hours = ("0" + dateobj.getHours()).slice(-2);
+ var minutes = ("0" + dateobj.getMinutes()).slice(-2);
+ var seconds = ("0" + dateobj.getSeconds()).slice(-2);
+ var day = dateobj.getDay();
+ var months = ["1","2","3","4","5","6","7","8","9","10","11","12"];
+ var converted_date = "";
+
+switch(format){
+ case "YYYY-MM-DD":
+  converted_date = year + "-" + month + "-" + date;
+  break;
+case "YYYY-MMM-DD DDD":
+  converted_date = year + "-" + months[parseInt(month)-1] + "-" + date
+  + " " + hours + ":" + minutes + ":" + seconds;
+  break;
+}
+//return converted_date;
+// to show it I used innerHTMl in a <p> tag
+    var before="";
+    fetch("{{ url_for('admin.getPlateNumber') }}")
+        .then(response => {
+                response.text().then(t => { 
+                    if(t.length>=6 & t!=this.before){               
+                    $(`
+                    <div class="row pass">
+
+                        <div class="col-lg-8 col-md-8 col-sm-12 col-12">
+                                        <a href="#">`+t+` </a>
+                        </div>
+
+                                    
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-12">
+                                    <a href="#">`+converted_date+`</a>
+                        </div>
+
+                   </div>
+                   `).appendTo('#plateNumbb');
+                   this.before=t;
+                }
+        });
+    })
+ } 
+
+</script>
+
+
+
+<script>
+    var cam1 = document.getElementById("cam1");
+    var frame = document.getElementById("framCam");
+    var plate = document.getElementById("plateCam");
+    cam1.addEventListener('click',function(){
+        frame.src="{{ url_for('admin.camera', action='on')}}";
+        plate.src="{{ url_for('admin.video_feed', action='on')}}";
+    })
+ 
+  </script>
+
+
+          <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+          crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+          integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+          crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+          integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+          crossorigin="anonymous"></script>
+    </body>
+</html>

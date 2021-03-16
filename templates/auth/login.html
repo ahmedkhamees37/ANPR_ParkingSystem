@@ -1,0 +1,17 @@
+{% import "bootstrap/utils.html" as utils %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "base.html" %}
+{% block title %}Training Courses{% endblock %}
+{% block body %}
+
+
+<div style="padding-top:7rem;" class="container">
+  <br/> {{ utils.flashed_messages() }}
+<br/>
+<hr>
+{{ wtf.quick_form(form) }}
+<hr>
+
+<a href="{{ url_for('auth.register', action='off')}}">Register</a>
+</div>
+{% endblock %}

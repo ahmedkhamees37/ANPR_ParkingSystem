@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Training Courses</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{{ url_for( 'static', filename='css/navv.css' ) }} " rel="stylesheet ">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
+</head>
+
+<body>
+
+
+
+<nav class="navbar navbar-expand-md navbar-fixed-top  main-nav" style="background-color: white">
+        <div class="container">
+
+             <ul class="nav navbar-nav">
+                 {% if session.get('email') != none%}
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{session['Name_EN']}}
+                        <img src="static/img/courses/{{session['picUser']}}"  width="40px" class="rounded-circle">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#"><i> {{session['email']}}</i></a>
+                        <a class="dropdown-item" href="{{ url_for( 'home.AppliedCources') }}">كورسات التي سجلتها</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item " href="{{ url_for( 'auth.logout') }}">تسجيل الخروج</a>
+
+                    </div>
+                </li>
+
+
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for( 'auth.register') }}">انشاء حساب</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for( 'auth.login') }}">تسجبل الدخول</a>
+                </li>
+
+                {% endif %}
+
+
+            </ul>
+            <ul class="nav navbar-nav mx-auto">
+                <div class="logo">
+                <li class="nav-item"> <a> <img  height="49"  src="static/img/5.png" />
+                    </a>
+                </li>
+                    </div>
+            </ul>
+            <ul class="nav navbar-nav">
+                 {% if session.get('email') == "admin@gmail.com"%}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('admin.list_courses') }}"> ادارة الكورسات المحجوزة</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('admin.userAppliedCources') }}">ادارة التسجيل</a>
+                </li>
+
+                 <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('home.homee') }}">الرئيسية</a>
+                </li>
+                {% else %}
+                 <li class="nav-item">
+                    <a class="nav-link" href="">اتصل بنا</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">اخبار</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('home.homee') }}">الرئيسية</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <div class="wrapper">
+        {% block body %} {% endblock %}
+        <div class="push "></div>
+    </div>
+
+
+
+ <!--------------------------
+			--     About Section      --
+			--------------------------->
+        <section id="about" class="teall-bg" >
+
+            <div class="container">
+
+                <h1>جامعة السويس</h1>
+                <hr class="style-seven" />
+                <p>
+                    A true creative who enjoys the process of building, new challenges, new ideas, and elegant
+                    solutions. I have trained for years in a number of creative diciplines including music composition,
+                    graphic design, illustration, and computer programming. I have
+                    a keen eye and strong sense of connection to the user's needs.
+                </p>
+
+            </div>
+
+        </section>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+</body>
+
+
+
+</html>
