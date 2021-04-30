@@ -82,39 +82,52 @@ def home():
     return render_template('admin/mainSystem.html')
 
 ##############
-cap1  = FileVideoStream("2.mp4")
+#cap1  = FileVideoStream("2.mp4")
 ##############
 # def video_object():
 #     return cv2.VideoCapture(0)
 
 from cam import CameraStream
-cap = CameraStream().start()
+
+
+
+
 
 
 @admin.route('/video_feed/<action>')
 def video_feed(action):
     if(action=="on"):
-        return Response(ob1.liveFeed(cap,model),
+
+        return Response(ob1.liveFeed(CameraStream().start(),model),
                         mimetype='multipart/x-mixed-replace; boundary=frame')  
     else:
-      return "oo.jpg"
+     return "oo.jpg"
 
 @admin.route('/camera/<action>')
 def camera(action):
 
-    """Video streaming route. Put this in the src attribute of an img tag."""
-    if(action=="on"):
-          return Response(ob1.camera(cap),
+     """Video streaming route. Put this in the src attribute of an img tag."""
+     if(action=="on"):
+        return Response(ob1.camera( CameraStream().start()),
                     mimetype='multipart/x-mixed-replace; boundary=frame')  
-   
-    else:
+     else:
       return "oo.jpg"
   
 
 @admin.route('/getPlateNumber', methods=['GET'])
 def getPlateNumber():
-     output = ob1.getPlate(cap)                                                                                                                                                                    
-     return Response(output, mimetype='text')                                                                                                                                              
+                    output = ob1.getPlate( CameraStream())      
+     
+                    # sampleDict = {"number_Plate": f"{output}",
+                    # "GateId":1,
+                    # "Acess_DateTime":"2019-01-06T17:16:40"
+                    # }     
+                    # print(sampleDict) 
+                    # print("ssssssssss")
+                    # response = requests.post('http://localhost:50455/Account/Access', json=sampleDict)
+                    # print(response.text)
+                                                                                                                                                                                 
+                    return Response(output, mimetype='text')                                                                                                                                              
                                                                                                                                                                              
 
 

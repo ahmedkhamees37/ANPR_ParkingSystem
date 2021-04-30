@@ -55,29 +55,29 @@
                                 <div class="acc">
                                     <div class="conf">
                                         <div class="c">
-                                            Confidence
+                                            
                                         </div>
                                         <div class="cr">
-                                            97%
+                                           
                                         </div>
                                       
                                     </div>
                                     <div class="time">
                                         <div class="t">
-                                            Time
+                                          
                                         </div>
             
                                         <div class="tr">
-                                            11:12:14
+                                            
                                         </div>
             
                                     </div>
                                     <div class="date"> 
                                         <div class="d">
-                                            date
+                                           
                                         </div>
                                         <div class="dr">
-                                            2021
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -94,13 +94,17 @@
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-12">
                                     <button id="cam1" type="button" class="btn btn-primary">Camera 1</button>                                </div>
-    
+                                </div>
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-12">
                                     <button type="button" class="btn btn-primary">Camera 2</button>    
                                 </div>
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-12">
                                     <button type="button" class="btn btn-primary">Camera 3</button>    
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-12">
+                                    <button id="Stop" type="button" class="btn btn-primary">Stop</button>                                </div>
                                 </div>
 
                         </div>
@@ -116,32 +120,17 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
               <ul class="navbar-nav mr-auto">
             
-                <li class="nav-item">
-                  <a class="nav-link" href="#">  <i class="fas fa-video"></i></a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#">  <i class="fas fa-camera"></i></a>
-                  </li>
-
+            
+             
                   <li class="nav-item">
-                    <a class="nav-link" href="#">  <i class="far fa-circle"></i></a>
+                    <a class="nav-link" href="{{ url_for('home.adminPanel', action='off')}}">  <i class="far fa-circle"></i></a>
                   </li>
 
                   <li class="nav-item">
                     <a class="nav-link" href="#">  <i class="fas fa-exclamation-triangle"></i></a>
                   </li>
 
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">                    <i class="far fa-bell"></i>
-                    </a>
-                  </li>
-
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">                    <i class="far fa-bell"></i>
-                    </a>
-                  </li>
-
+                
                   <li class="nav-item">
                     <a class="nav-link" href="#">                    <i class="far fa-bell"></i>
                     </a>
@@ -153,6 +142,22 @@
 
 
 <script>
+    var cam1 = document.getElementById("cam1");
+    var frame = document.getElementById("framCam");
+    var plate = document.getElementById("plateCam");
+    var stopp = document.getElementById("Stop");
+    var trigg = false;
+
+    cam1.addEventListener('click',function(){
+        frame.src="{{ url_for('admin.camera', action='on')}}";
+        plate.src="{{ url_for('admin.video_feed', action='on')}}";
+        trigg = true;
+     
+     
+    })
+    stopp.addEventListener('click',function(){
+       trigg = false;
+    })
 
 setInterval(function(){
   var date = new Date();
@@ -185,6 +190,7 @@ case "YYYY-MMM-DD DDD":
 //return converted_date;
 // to show it I used innerHTMl in a <p> tag
     var before="";
+    if(trigg==true){
     fetch("{{ url_for('admin.getPlateNumber') }}")
         .then(response => {
                 response.text().then(t => { 
@@ -207,22 +213,10 @@ case "YYYY-MMM-DD DDD":
                 }
         });
     })
+    }
  } 
 
 </script>
-
-
-
-<script>
-    var cam1 = document.getElementById("cam1");
-    var frame = document.getElementById("framCam");
-    var plate = document.getElementById("plateCam");
-    cam1.addEventListener('click',function(){
-        frame.src="{{ url_for('admin.camera', action='on')}}";
-        plate.src="{{ url_for('admin.video_feed', action='on')}}";
-    })
- 
-  </script>
 
 
           <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

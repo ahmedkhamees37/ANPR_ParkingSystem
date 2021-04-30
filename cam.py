@@ -3,7 +3,7 @@ import cv2
 
 
 class CameraStream(object):
-    def __init__(self, src="outt.mp4"):
+    def __init__(self, src="ww.mp4"):
         self.stream = cv2.VideoCapture(src)
 
         (self.grabbed, self.frame) = self.stream.read()
@@ -18,7 +18,7 @@ class CameraStream(object):
         self.thread = Thread(target=self.update, args=())
         self.thread.start()
         return self
-
+    
     def update(self):
         while self.started:
             (grabbed, frame) = self.stream.read()

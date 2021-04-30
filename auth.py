@@ -20,10 +20,13 @@ auth = Blueprint('auth', __name__)
 ##
 ##
 class RegistrationForm(FlaskForm):
-    email = StringField('Email Address', validators=[Email(), DataRequired()])
+    email = StringField('Academic Email Address', validators=[Email(), DataRequired()])
     username = StringField('Username', validators=[DataRequired()])
     #first_name = StringField('First Name', validators=[DataRequired()])
     #last_name = StringField('Last Name', validators=[DataRequired()])
+
+    PlateNumber = StringField('Car Plate Number ', validators=[DataRequired()])
+    
     password = PasswordField('Password', validators=[
         EqualTo('confirm_password'), DataRequired()])
     confirm_password = PasswordField('Confirm Password')

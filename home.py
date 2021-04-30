@@ -11,14 +11,19 @@ from wtforms.validators import DataRequired, Email, EqualTo
 ####
 home = Blueprint('home', __name__)
 
-
-
-
-
-
-
 import json
 
+@home.route('/adminPanel')
+def adminPanel():
+    
+    return render_template('admin/panel.html')
+
+
+@home.route('/parkingSlotes')
+#@login_required
+def parkingSlotes():
+    
+    return render_template('parking/parking.html')
 
 
 ####newww####

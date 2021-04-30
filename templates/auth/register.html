@@ -11,7 +11,7 @@
 {{ wtf.quick_form(form) }}
 <hr>
 
-<a href="{{ url_for('auth.login', action='off')}}">Login</a>
+<a type="button" class="btn btn-primary" href="{{ url_for('auth.login', action='off')}}">Login</a>
 </div>
 
 {%endblock%}

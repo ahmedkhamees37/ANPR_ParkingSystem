@@ -259,6 +259,9 @@ class alpr:
 
             frame = cap.read()
            
+            # if not success:
+            #     break
+
             blob = cv2.dnn.blobFromImage(frame, 1 / 255, (inpWidth, inpHeight), (0, 0, 0), 1, crop=False)
             net.setInput(blob)
             run = net.forward(self.getOutputsNames(net))    
@@ -325,6 +328,9 @@ class alpr:
         while(cap.stream.isOpened()):
         # Capture frame-by-frame
             img = cap.read()
+            # if not sucess:
+            #     break
+            
             if img is not None:
                 img = cv2.resize(img, (0,0), fx=0.5, fy=0.5) 
                 frame = cv2.imencode('.jpg', img)[1].tobytes()
@@ -333,5 +339,3 @@ class alpr:
             else: 
                 cap.stop()
           
-
-
