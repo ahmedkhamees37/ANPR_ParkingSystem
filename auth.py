@@ -48,13 +48,14 @@ from werkzeug.utils import secure_filename
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
   
-    try:
+    # try:
         form = RegistrationForm()
         if form.validate_on_submit():
 
             sampleDict = {
-                 "email": form.email.data,
-                 "Password": form.password.data,
+                 "email": f"{form.email.data}",
+                 "Password": f"{form.password.data}",
+                 "carPlateNumber":f"{form.PlateNumber.data}",
                  "rememberMe":True,
                  "UserName" : f"{form.username.data}",
              }
@@ -63,7 +64,12 @@ def register():
 
             if (sampleDict): #Email is not found and its unique
                 response = requests.post('http://localhost:50455/Account/Register', json=sampleDict)
-                print(response)
+                
+                print(response.text)
+                # if(response.ok):
+                #     res = make_response(render_template('auth/login.html'))
+                #     return res
+
             #     if response.text !=0:
             # ##################### Send Pic ######################
             #         filepath=upload_file(form.pic.data)
@@ -86,10 +92,10 @@ def register():
                   flash('Check Email')
                   return render_template('auth/register.html', form=form, title='Register')
 
-    except Exception as e:
-        return render_template("errors/403.html")  # Send user to an error page if something happened during login.
+    # except Exception as e:
+    #     return render_template("errors/403.html")  # Send user to an error page if something happened during login.
 
-    return render_template('auth/register.html', form=form, title='Register')
+        return render_template('auth/register.html', form=form, title='Register')
 
 
 

@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+{% block body %}
+ <!--  landing section -->
+ <div class="landing">
+    <div class="intro-text">
+        <h1 class=" ml5">
+            <span class="text-wrapper">
+                <span class="line line1"></span>
+                <span class="letters letters-left">HELLO TO, </span>
+                <span class="letters letters-right">{{pagetitle}}</span>
+                <span class="line line2"></span>
+            </span>
+        </h1>
+        <p>
+            ANPR is an abbreviation for Automatic Number-Plate Recognition System that minimizes human errorused in
+            stolen cars tracking, automatic toll collection, parking system, border crossings, traffic control, law
+            enforcement & maintaining traffic activities.
+            ..
+        </p>
+        <a class="btn button hvr-buzz"  href="{{ url_for('home.homee', action='off')}}"><i style="margin-right:5px;"
+                class="fas fa-hand-point-right"></i>Join Now</a>
+    </div>
+
+</div>
+
+<!-- variable-->
+<!-- SOCIAL PANEL HTML -->
+<div class="social-panel-container" id="social-cont">
+<div class="social-panel">
+    <button class="close-btn"><i class="fas fa-times"></i></button>
+    <h4>Get in touch on</h4>
+    <ul>
+        <li>
+            <a href="https://www.patreon.com/" target="_blank">
+                <i class="fab fa-discord"></i>
+            </a>
+        </li>
+        <li>
+            <a href="https://twitter.com/" target="_blank">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </li>
+        <li>
+            <a href="https://linkedin.com/in/" target="_blank">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        </li>
+        <li>
+            <a href="https://facebook.com/" target="_blank">
+                <i class="fab fa-facebook"></i>
+            </a>
+        </li>
+        <li>
+            <a href="https://instagram.com/" target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+</div>
+<button class="floating-btn">
+Get in Touch
+</button>   
+    <!--  features section -->
+    <div class="features">
+        <div class="container wow swing">
+            <div class="feat hvr-wobble-to-bottom-right">
+                <i class="fas fa-map-marked-alt"></i>
+                <h4>Cover All Country</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur
+                    adipiscing elit, sed do eiusmod tempor
+                    incididunt ut lab</p>
+            </div>
+            <div class="feat hvr-wobble-to-bottom-right">
+                <i class="fas fa-search"></i>
+                <h4>Know your position</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur
+                    adipiscing elit, sed do eiusmod tempor
+                    incididunt ut lab</p>
+            </div>
+            <div class="feat hvr-wobble-to-bottom-right">
+                <i class="fas fa-laptop"></i>
+                <h4>programming</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur
+                    adipiscing elit, sed do eiusmod tempor
+                    incididunt ut lab</p>
+            </div>
+        </div>
+    </div>
+    <!-- services section -->
+    <div class="services">
+        <div class="container">
+            <h2 class="special-head">Services</h2>
+            <p>Dont't be busy, be productive</p>
+            <div class="services-content wow swing">
+                <!-- first coloumn -->
+                <div class="col">
+                    <div class="service hvr-wobble-to-bottom-right">
+                        <i class="fas fa-water"></i>
+                        <h4>watering</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur
+                            adipiscing elit, sed do eiusmod tempor
+                            incididunt ut lab</p>
+                    </div>
+                    <div class="service hvr-wobble-to-bottom-right">
+                        <i class="fas fa-home"></i>
+                        <h4>stay at home</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur
+                            adipiscing elit, sed do eiusmod tempor
+                            incididunt ut lab</p>
+                    </div>
+                </div>
+                <!-- seconed coloumn -->
+                <div class="col">
+                    <div class="service hvr-wobble-to-bottom-right">
+                        <i class="fas fa-fire"></i>
+                        <h4>warning fire</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur
+                            adipiscing elit, sed do eiusmod tempor
+                            incididunt ut lab</p>
+                    </div>
+                    <div class="service hvr-wobble-to-bottom-right">
+                        <i class="fas fa-globe"></i>
+                        <h4>around the globe</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur
+                            adipiscing elit, sed do eiusmod tempor
+                            incididunt ut lab</p>
+                    </div>
+                </div>
+                <!-- third column -->
+                <div class="col">
+                    <div class="image">
+                        <img src="{{url_for('static',filename='./img/head.jpg')}}" class="hvr-wobble-to-bottom-right" alt="mountain" />
+                        <span class="span-one"></span>
+                        <span class="span-two"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- portofolio section -->
+    <div class="portofolio">
+        <div class="container">
+            <h2 class="special-head">Our Team</h2>
+            <p>if you do it right, it will last</p>
+            <div class="portofolio-content wow swing">
+                <div class="card hvr-wobble-to-bottom-right ">
+                    <img src="{{url_for('static',filename='./img/ali.jpg')}}" alt="">
+                    <h3>Ali Shemy</h3>
+                    <p>An IT Suez university Student who adores IT specialization one of the hard workers.</p>
+                </div>
+                <div class="card hvr-wobble-to-bottom-right ">
+                    <img src="{{url_for('static',filename='./img/soliman.jpg')}}" alt="">
+                    <h3>Soliman Mohamed </h3>
+                    <p>An IT Suez university Student who adores IT specialization one of the elite students.</p>
+                </div>
+                <div class="card hvr-wobble-to-bottom-right ">
+                    <img src="{{url_for('static',filename='./img/Abdelrahman.jpg')}}" alt="">
+                    <h3>Abdelrahman Elrefai</h3>
+                    <p>A CS student who is specialized in full stack web developing.</p>
+                </div>
+
+                
+            </div>
+            <a class="button hvr-pop text-center" href="about"><i style="margin-right:5px;"
+                class="fas fa-info"></i>know more</a>
+        </div>
+    </div>
+    <!-- home-about section -->
+    <div class="about">
+        <div class="container">
+            <h2 class="special-head">About</h2>
+            <p>to work less work more</p>
+            <div class="about-content wow swing">
+                <div class="about-img ">
+                    <img class="hvr-wobble-to-bottom-right" src="{{url_for('static',filename='./img/cameras.webp')}}" alt="">
+                    <span class="span-one"></span>
+                    <span class="span-two"></span>
+                </div>
+
+                <div class="about-text">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliqui</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliqu</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- contact section -->
+    <div class="contact">
+        <div class="container">
+            <h2 class="special-head">Contact</h2>
+            <p>create something different</p>
+            <div class="contact-content wow swing">
+                <h2>Feel Free to drop us a line at:</h2>
+                <a href="mailto:team.man00@gmail.com?subject=Contact">team.man00@gmail.com</a>
+                <div class="social">
+                    <p>Find us on social networks:</p>
+                    <ul>
+                        <li><a href="https://www.facebook.com"><i class="fab fa-facebook"></i>
+                            </a></li>
+                        <li><a href="https://www.twitter.com"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="https://www.google.com"><i class="fab fa-google"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

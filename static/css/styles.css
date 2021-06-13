@@ -639,10 +639,9 @@ input[type='checkbox'] {
 }
 
 .navbar-custom .navbar-brand.logo-image img {
-    width: 5rem;
-	height: 4rem;
+    width: 90px;
+	height: 90px;
 }
-
 .navbar-custom .navbar-brand.logo-text {
 	font: 600 2rem/1.5rem "Raleway", sans-serif;
 	color: #393939;
@@ -1034,6 +1033,15 @@ input[type='checkbox'] {
 	border: none;
 	background-color: #c4d8dc;
 }
+
+.landing {
+    background-image: url(../img/head2.jpg);
+    background-position: center;
+    background-size: cover;
+    height: calc(100vh - 100px);
+    position: relative;
+}
+
 
 .cards-2 .card .price {
 	padding-top: 0.875rem;

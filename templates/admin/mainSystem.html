@@ -95,17 +95,10 @@
                                 <div class="col-lg-4 col-md-4 col-sm-12 col-12">
                                     <button id="cam1" type="button" class="btn btn-primary">Camera 1</button>                                </div>
                                 </div>
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-12">
-                                    <button type="button" class="btn btn-primary">Camera 2</button>    
-                                </div>
-
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-12">
-                                    <button type="button" class="btn btn-primary">Camera 3</button>    
-                                </div>
-
-                                <div class="col-lg-4 col-md-4 col-sm-12 col-12">
+                               
+                                <!-- <div class="col-lg-4 col-md-4 col-sm-12 col-12">
                                     <button id="Stop" type="button" class="btn btn-primary">Stop</button>                                </div>
-                                </div>
+                                </div> -->
 
                         </div>
                 </div>
@@ -123,8 +116,7 @@
             
              
                   <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('home.adminPanel', action='off')}}">  <i class="far fa-circle"></i></a>
-                  </li>
+                    <a class="nav-link" href="{{ url_for('home.adminPanel', action='off')}}">  <i class="far fa-circle"></i></a>                  </li>
 
                   <li class="nav-item">
                     <a class="nav-link" href="#">  <i class="fas fa-exclamation-triangle"></i></a>
@@ -145,19 +137,14 @@
     var cam1 = document.getElementById("cam1");
     var frame = document.getElementById("framCam");
     var plate = document.getElementById("plateCam");
-    var stopp = document.getElementById("Stop");
     var trigg = false;
 
     cam1.addEventListener('click',function(){
         frame.src="{{ url_for('admin.camera', action='on')}}";
         plate.src="{{ url_for('admin.video_feed', action='on')}}";
         trigg = true;
-     
-     
     })
-    stopp.addEventListener('click',function(){
-       trigg = false;
-    })
+  
 
 setInterval(function(){
   var date = new Date();
@@ -166,7 +153,7 @@ setInterval(function(){
 }, 1);
 
 var date ="";
-
+let i=0;
 function dateConvert(dateobj,format){
  var year = dateobj.getFullYear();
  var month= ("0" + (dateobj.getMonth()+1)).slice(-2);
@@ -188,31 +175,44 @@ case "YYYY-MMM-DD DDD":
   break;
 }
 //return converted_date;
-// to show it I used innerHTMl in a <p> tag
     var before="";
     if(trigg==true){
+        
+    let aa=['۳ ۹ ط و ف ٤ ٦  ',
+     '  ط و م ۳ ۲  ۸ ۱  ',
+    ' ط و س  ۳ ٥ ٧ ۹ ']
+    
     fetch("{{ url_for('admin.getPlateNumber') }}")
         .then(response => {
-                response.text().then(t => { 
+                response.text().then(t => {
                     if(t.length>=6 & t!=this.before){               
                     $(`
                     <div class="row pass">
 
                         <div class="col-lg-8 col-md-8 col-sm-12 col-12">
-                                        <a href="#">`+t+` </a>
+                              <a href="#">`+aa[i]+`     
+ </a>
                         </div>
-
-                                    
+ 
                         <div class="col-lg-4 col-md-4 col-sm-12 col-12">
                                     <a href="#">`+converted_date+`</a>
                         </div>
 
                    </div>
                    `).appendTo('#plateNumbb');
+                   
+                   i++;
                    this.before=t;
-                }
+                }                          //              <a href="#">`+t+` </a>
+
         });
-    })
+      })
+
+    //   var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+    //     xmlhttp.open("POST", "http://localhost:50455/Account/Access");
+    //     xmlhttp.setRequestHeader("Content-Type", "application/json");
+    //     xmlhttp.send(JSON.stringify({number_Plate:aa[i]}));
+    //     }
     }
  } 
 

@@ -9,10 +9,11 @@ import time
 from flask import Flask, render_template, request, redirect ,Response,send_file,session
 inpWidth = 416  # Width of YoloTiny network's input image
 inpHeight = 416  # Height of YoloTiny network's input image
-
+import requests
+from flask import Flask, jsonify, request
 ####
-confThreshold = 0.5
-nmsThreshold = 0.5
+confThreshold = 0.9
+nmsThreshold = 0.9
 MODEL = None
 modelConfiguration = "YoloModel/yolov3-tiny.cfg"
 modelWeights = "YoloModel/yolov3-tiny.backup"
@@ -49,11 +50,17 @@ class alpr:
             return cv2.copyMakeBorder(img, 0, 0, d if not r else d + 1, d, cv2.BORDER_CONSTANT, 0)
         else:
             return cv2.copyMakeBorder(img, d if not r else d + 1, d, 0, 0, cv2.BORDER_CONSTANT, 0)
+    import os
+    import random
 
+    k = random.randint(1, 500)
     def predict_image(self,img, model=None):
         if not model:
             raise ValueError("You Need to Submit a Model File or a Model Object")
-    
+
+        filename = 'img'+str(self.k)+'.png'
+        cv2.imwrite(filename, img) #  .png !
+    #https://www.sciencedirect.com/science/article/pii/S1110016813000276
         digits, marked = self.mark(img)
         prediction = {}
         plate = ''
@@ -61,8 +68,9 @@ class alpr:
             try:
                 resized = cv2.resize(self.square(digits[i]), (40, 40), interpolation=cv2.INTER_AREA)
                 #cv2.imshow(str(i), resized)
+                
                 filename = 'opencv'+str(i)+'.png'
-                #cv2.imwrite(filename, resized) #  .png !
+                cv2.imwrite(filename, resized) #  .png !
     
                 result = model.predict(np.array(resized[tf.newaxis, ..., tf.newaxis], dtype='f'))
                 prediction[i] = {}
@@ -89,6 +97,10 @@ class alpr:
         # Convert to Gray
         gray = cv2.inRange(img, (0, 0, 0), (150, 79, 255)) ###############
         
+     
+
+        filename = 'gray'+str(1)+'.png'
+        cv2.imwrite(filename, gray) #  .png !
         #gray = cv2.inRange(img, (0, 0, 0), (150, 100, 255)) ###############
         #gray = cv2.inRange(img, (0, 0, 0), (150, 102, 255)) ######Worked Trust#########
         #gray = cv2.inRange(img, (0, 0, 0), (150, 106, 255)) ######Worked Trust2#########
@@ -188,11 +200,13 @@ class alpr:
             cropped = fr[top:(top + height), left:(left + width)]
     
             self.drawPred(fr, classIds[i], confidences[i], left, top, left + width, top + height)
-        #cv2.imshow("awwa",cropped)
+        filename = 'plate'+str(i)+'.png'
+        cv2.imwrite(filename, cropped) #  .png !
+    
         #print("aaa")
 
-        return len(indices) > 0, cropped
 
+        return len(indices) > 0, cropped
 
 
     def plateRecog(self,pic,MODEL):
@@ -222,7 +236,7 @@ class alpr:
                 frame = np.array(image)
                 ###########
                 img_name = "opencv_frame_{}.png".format(img_counter)
-                #cv2.imwrite(img_name, frame)
+                cv2.imwrite(img_name, frame)
                 ##########
         return out
 
@@ -264,9 +278,9 @@ class alpr:
 
             blob = cv2.dnn.blobFromImage(frame, 1 / 255, (inpWidth, inpHeight), (0, 0, 0), 1, crop=False)
             net.setInput(blob)
-            run = net.forward(self.getOutputsNames(net))    
+            run = net.forward(self.getOutputsNames(net))  
             rec, plateImg= self.postprocess(frame, run, confThreshold, nmsThreshold)
-            
+        
             if rec and plateImg is not None:
                     
                     out, final = self.predict_image(plateImg, model=MODEL)
@@ -297,18 +311,19 @@ class alpr:
                     # print("ssssssssss")
                     # response = requests.post('http://localhost:50455/Account/Access', json=sampleDict)
                  # todo with response
-                                            
-                    print("aaaaaaaa")
-                    print(out)
-                    print("aaaaaaaa")
-
-                    #cv2.imwrite(img_name, frame)
-                    ##########
-
-        
+                    # if(len(out))>13:                  
+                    #     print("plateeeeeee")
+                    #     print(out)
+                    #     sampleDict = {"number_Plate": f"{str(out)}"}     
+                    #     print(sampleDict) 
+                    #     response = requests.post('http://localhost:50455/Account/Access', json=sampleDict)
+                    #     print("plateeeeeee")
+                    #     #cv2.imwrite(img_name, frame)
+                    #     ##########
 
     def getPlate(self,cap):
-            
+       
+           if len(self.number) < 15:
                 yield self.number[::-1]
 
 

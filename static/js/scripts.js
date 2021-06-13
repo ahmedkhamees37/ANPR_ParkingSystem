@@ -5,6 +5,120 @@
 */
 
 
+$('.selectLoc').on('submit', function(event) {
+
+    var numberSlots=0;
+    $.ajax({
+        data : {
+            area : $('#area').val(),
+        },
+        type : 'POST',
+        url : '/getParkingSpaces',
+        success:function(data) {
+            console.log(data)
+            number= data.Nslots
+            NnoParking = parseInt(number)
+        
+            $('#parkingslot').empty()
+           
+            html=` <div style="padding-top:100px" class="row">
+            `;
+          
+            for(var i =1 ; i <= 10 ;i++){
+
+                if(NnoParking>0){
+                    html +=  `
+
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-12 mt-2 sidenav">
+                    <div class="slot1">
+                
+                      <h6>Slot `+i+`</h6>
+                      <img class="img-fluid" style="width: 80px;height: 80px;" src="static/img/nop.jpg" alt="alternative">
+                    </div>
+                    </div>
+                  `
+                }
+                else{
+                    html +=  `
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-12 mt-2 sidenav">
+                    <div class="slot1">
+                
+                    <h6>Slot `+i+`</h6>
+                
+                    <button type="button" id="place" value=`+i+` onclick="getvalue(this.value)"  data-toggle="modal" data-target="#myModal"><img class="img-fluid" style="width: 80px;height: 80px;" src="static/img/p.png" alt="alternative"></button>
+
+                    </div>
+                    </div>
+                `
+                }
+                NnoParking--;
+
+            }
+
+         html+=`
+         </div>
+
+
+         </div>`
+
+$('#parkingslot').append(html)
+       
+            
+            
+         },
+    })
+    .done(function(data) {
+
+        if (data.error) {
+         console.log("asdas")
+        }
+        else {
+            console.log(data)
+        }
+
+    });
+
+    event.preventDefault();
+});
+
+
+
+function getvalue(val){
+
+    document.getElementById("registerSpace").value=val;
+}
+
+
+
+
+$("#registerSpace").click(function(){
+    
+    $.ajax({
+        data : {
+            space : document.getElementById("registerSpace").value,
+        },
+        type : 'POST',
+        url : '/RegisterParkingSpaces',
+        success:function(data) {
+          console.log("added")   
+        }
+    })
+    .done(function(data) {
+
+        if (data.error) {
+         console.log("asdas")
+        }
+        else {
+            console.log(data)
+        }
+
+    });
+
+    
+
+
+  });
+
 (function($) {
     "use strict"; 
 	

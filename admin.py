@@ -117,7 +117,7 @@ def camera(action):
 @admin.route('/getPlateNumber', methods=['GET'])
 def getPlateNumber():
                     output = ob1.getPlate( CameraStream())      
-     
+                    
                     # sampleDict = {"number_Plate": f"{output}",
                     # "GateId":1,
                     # "Acess_DateTime":"2019-01-06T17:16:40"
@@ -126,7 +126,6 @@ def getPlateNumber():
                     # print("ssssssssss")
                     # response = requests.post('http://localhost:50455/Account/Access', json=sampleDict)
                     # print(response.text)
-                                                                                                                                                                                 
                     return Response(output, mimetype='text')                                                                                                                                              
                                                                                                                                                                              
 
