@@ -98,6 +98,7 @@ def register():
         return render_template('auth/register.html', form=form, title='Register')
 
 
+from requests.structures import CaseInsensitiveDict
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -113,12 +114,43 @@ def login():
                 response = requests.post('http://localhost:50455/Account/Login', json=sampleDict)
                  # todo with response
                 token = json.loads(response.text)
-                
-        if(response.ok):
-                res = make_response(render_template('admin/mainSystem.html'))
-                res.set_cookie("token", token['token'] ,httponly =True)
                 print(token)
-                return res
+                if(response.ok):
+                        #res = make_response(render_template('admin/mainSystem.html'))
+                        #res = flask.make_response()   
+                        
+                        url = "http://localhost:50455/Account/IsAdmin"
+                        print("aaa")
+                        print(str(token))
+                        payload="{\"probName\": \"Reverse Integer\"}\r\n"
+                        headers = {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer '+str(token.get('token')),
+                        'Cookie': '.AspNetCore.Identity.Application=CfDJ8E3aAmEvYipFulffWPbZEEG-nx5fCjmJKx2B6xwnQ4SPWV74OpBaW7uCv9Q6vzaAanWgN5Tz-v-_MhaAtMpLaZ8AyLmdUWmJKkldMrVtecYWUQzgwUzQX59RmD_qRI7BrwDnj2A7yb1bWxTZNpDGL7EKpSZED4Y8VlZF7CGJ6CunVJnGYnFp81ivTofBG2u2v0zxILG8gE1y2jklsoyUliSBA9XC5lnZhWYJjSUZI5ShQRPMdNLixUVbFBOQxbVraZ971D-XmOcNNy6VtwtBaZo9mEUmNRc60rE5Ls7DcEsu-hEtUzkLUm3fWOZepxKUUR1C3KZQUnZbejo1FvgJKqyLCQRjut8mvXWjP6lMFFdR907QE-x0Y1BSl8H3VdfRaV3oyaCNhLM8Mvrl3d9KM9F45SOqgJoMrGtDNeRKfziYPsF7hhserjndRAwfwpe9NKdp6Ccq91ryqopHCaNXEX9k0LPf4CgAZhvKrPnANJ4tbqDBmo9rr1R9g0fbLPcRokVzTQ0hblW1tQlMJTAZ9UsV-Fw1hZtJK8A17b4nJh4KgyZi_uiqWjR5YSeks__SUGiDFg6434jTcZNK_ZaFKuYcl6a4wRndd2OPpM4TqSadjWjO3QbI7g53LppZ5HdrY15Z5kDaOD6Z-iJeeQMDfzzE6gNH9I2mNSCRmyGGjm-5s1ui6cqp9yPfspjWCgyqJYK9w5NMPPIIGoz8wD1Ous8'
+                        }
+
+                        resp = requests.request("GET", url, headers=headers, data=payload)
+
+                        print(resp.text)
+
+        
+                    
+                        print(resp.text)
+                        if(resp.text == "true"):
+                            print("admin")
+                            res = make_response(render_template('admin/mainSystem.html'))
+                            res.set_cookie("token", token['token'] ,httponly =True)
+                            return res
+
+                        else: 
+                            print("user")
+                            res = make_response(render_template('parking/parking.html'))
+                            res.set_cookie("token", token['token'] ,httponly =True)
+                            return res
+                        
+                    
+
+                    
 
         #cookie = request.cookies.get('token')
 

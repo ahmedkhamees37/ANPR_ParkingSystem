@@ -27,7 +27,7 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-ob1 = alpr()
+ob1 = alpr()        
 
 
 MODEL=None
