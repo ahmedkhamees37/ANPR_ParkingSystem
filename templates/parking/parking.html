@@ -29,6 +29,10 @@
 
   }
 
+  #urSlot h3{
+    text-align: center;
+  }
+
 </style>
 
 <div style="padding-top:7rem;" class="container">
@@ -51,6 +55,16 @@
   </form>
 </div>
 
+
+<div style="padding-top:7rem;" class="container">
+ 
+  
+      <div id="urSlot">
+      </div>
+   
+     
+     
+</div>
 <!-- Trigger the modal with a button -->
 
 <!-- Modal -->
@@ -60,12 +74,27 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
+        <p>Click Register to approve Registration</p>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title"></h4>
       </div>
       <div class="modal-body">
-        <p>You are gonna register this space , click Register for approve</p>
-      
+
+        <p>Pick Number of Hours for parking</p>
+        <div class="input-group number-spinner">
+          <span class="input-group-btn">
+            <button class="btn btn-default" data-dir="dwn"><span class="glyphicon glyphicon-minus">-</span></button>
+          </span>
+          <input type="text" id="hours" class="form-control text-center" value="1">
+          <span class="input-group-btn">
+            <button class="btn btn-default" data-dir="up"><span class="glyphicon glyphicon-plus">+</span></button>
+          </span>
+        </div>
+
+        <p>Google map shows parking lots in suez university </p>
+        
+        <iframe src="https://www.google.com/maps/d/embed?mid=1-G04nGWukSaqDV62m0vmAAbdxY6EgnmB" width="460" height="400"></iframe>
+
       </div>
       <div class="modal-footer">
         <button type="button" id="registerSpace" class="btn btn-default" data-dismiss="modal">Register</button>

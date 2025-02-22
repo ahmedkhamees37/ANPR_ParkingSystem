@@ -102,6 +102,12 @@ from requests.structures import CaseInsensitiveDict
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
+
+    if request.cookies.get('token') is not None:
+          res = make_response(render_template('home/home.html'))
+          return res
+
+
     form = LoginForm()
     if form.validate_on_submit():
         ##Sends email to webservices , to get full details of that person
@@ -138,13 +144,13 @@ def login():
                         print(resp.text)
                         if(resp.text == "true"):
                             print("admin")
-                            res = make_response(render_template('admin/mainSystem.html'))
+                            res = make_response(redirect(url_for('admin.home')))
                             res.set_cookie("token", token['token'] ,httponly =True)
                             return res
 
                         else: 
                             print("user")
-                            res = make_response(render_template('parking/parking.html'))
+                            res = make_response(redirect(url_for('home.parkingSlotes')))
                             res.set_cookie("token", token['token'] ,httponly =True)
                             return res
                         
@@ -176,15 +182,73 @@ def login():
     return render_template('auth/login.html', form=form, title='Login')
 
 
-# ###NOT YET##
-# @auth.route('/logout')
-# def logout():
-#     session.pop('email',None)
-#     session.pop('picUser', None)
-#     session.pop('Name_EN', None)
+###NOT YET##
+@auth.route('/logout')
+def logout():
+    ress = make_response(redirect(url_for('home.homepage')))
+    url = "http://localhost:50455/Account/Logout"
 
-#     flash('You have successfully been logged out.')
-#     return redirect(url_for('auth.login'))
+    payload="{\"probName\": \"Reverse Integer\"}\r\n"
+    headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer '+str(request.cookies.get('token')),
+    'Cookie': '.AspNetCore.Identity.Application=CfDJ8E3aAmEvYipFulffWPbZEEG-nx5fCjmJKx2B6xwnQ4SPWV74OpBaW7uCv9Q6vzaAanWgN5Tz-v-_MhaAtMpLaZ8AyLmdUWmJKkldMrVtecYWUQzgwUzQX59RmD_qRI7BrwDnj2A7yb1bWxTZNpDGL7EKpSZED4Y8VlZF7CGJ6CunVJnGYnFp81ivTofBG2u2v0zxILG8gE1y2jklsoyUliSBA9XC5lnZhWYJjSUZI5ShQRPMdNLixUVbFBOQxbVraZ971D-XmOcNNy6VtwtBaZo9mEUmNRc60rE5Ls7DcEsu-hEtUzkLUm3fWOZepxKUUR1C3KZQUnZbejo1FvgJKqyLCQRjut8mvXWjP6lMFFdR907QE-x0Y1BSl8H3VdfRaV3oyaCNhLM8Mvrl3d9KM9F45SOqgJoMrGtDNeRKfziYPsF7hhserjndRAwfwpe9NKdp6Ccq91ryqopHCaNXEX9k0LPf4CgAZhvKrPnANJ4tbqDBmo9rr1R9g0fbLPcRokVzTQ0hblW1tQlMJTAZ9UsV-Fw1hZtJK8A17b4nJh4KgyZi_uiqWjR5YSeks__SUGiDFg6434jTcZNK_ZaFKuYcl6a4wRndd2OPpM4TqSadjWjO3QbI7g53LppZ5HdrY15Z5kDaOD6Z-iJeeQMDfzzE6gNH9I2mNSCRmyGGjm-5s1ui6cqp9yPfspjWCgyqJYK9w5NMPPIIGoz8wD1Ous8'
+    }
+
+    res = requests.request("GET", url, headers=headers, data=payload)
+
+    print(res.text)
+
+    ress.delete_cookie("token")
+   
+    return ress
+
+###########################Pricing##########################
+
+@auth.route('/pricing')
+def pricing():
+
+    return render_template('auth/memberPricing.html')
+
+@auth.route('/getSessionIDMonth',methods=['POST'])
+def getSessionIDMonth():
+
+        sampleDict = {
+                 "priceid": "price_1J6EhlGbd5hvE4QitsvxHzTU",
+             }
+        print(sampleDict)
+      
+        sessionID = requests.post('http://localhost:50455/Payment/create-checkout-session',json=sampleDict)
+
+        json_dictionary = json.loads(sessionID.text)
+        print(json_dictionary)
+        return jsonify({'sessionID' : json_dictionary})
+
+
+@auth.route('/paymentSucceded',methods=['GET'])
+def paymentSucceded():
+
+    return render_template('auth/paymentSucceded.html')
+
+@auth.route('/myPlan')
+def myPlan():
+       
+        sampleDict = {
+                 "returnUrl": "https://www.google.com/",
+             }
+        print(sampleDict)
+        token = request.cookies.get('token')
+        hed = {'Authorization': 'Bearer ' + token}
+        print(token)
+        myplan = requests.post('http://localhost:50455/Payment/customer-portal',headers=hed,json=sampleDict)
+        
+        plan=[]
+        json_dictionary = json.loads(myplan.text)
+       
+        print(json_dictionary['url'])
+
+        return redirect(json_dictionary['url'], code=302)
+
 
 
 # ###################################################################################################

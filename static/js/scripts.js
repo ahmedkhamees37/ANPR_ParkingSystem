@@ -4,9 +4,26 @@
    Description: Custom JS file
 */
 
-
 $('.selectLoc').on('submit', function(event) {
 
+    $.get("/endParkingReve", function(data){
+        console.log(data.mySlot)
+      });
+
+
+    $.get("/myParkingSpace", function(data){
+        console.log(data.mySlot)
+        $('#urSlot').empty();
+            num=`
+            <h3>Your Parking Slot is </h3>
+            <h3>Slot `+data.mySlot+`</h3>
+            <button onclick="cancelReservation(`+data.mySlot+`)"  class="btn btn-danger btn-loc">Cancel Reservation</button>
+
+            `;
+            $('#urSlot').append(num)
+
+      });
+      
     var numberSlots=0;
     $.ajax({
         data : {
@@ -15,18 +32,15 @@ $('.selectLoc').on('submit', function(event) {
         type : 'POST',
         url : '/getParkingSpaces',
         success:function(data) {
-            console.log(data)
-            number= data.Nslots
-            NnoParking = parseInt(number)
-        
+   
             $('#parkingslot').empty()
            
-            html=` <div style="padding-top:100px" class="row">
+            html=` <div style="margin-top:100px" class="row">
             `;
           
             for(var i =1 ; i <= 10 ;i++){
 
-                if(NnoParking>0){
+                if(data['slots'].includes(i)){
                     html +=  `
 
                     <div class="col-lg-3 col-md-6 col-sm-6 col-12 mt-2 sidenav">
@@ -38,6 +52,7 @@ $('.selectLoc').on('submit', function(event) {
                     </div>
                   `
                 }
+
                 else{
                     html +=  `
                     <div class="col-lg-3 col-md-6 col-sm-6 col-12 mt-2 sidenav">
@@ -45,13 +60,25 @@ $('.selectLoc').on('submit', function(event) {
                 
                     <h6>Slot `+i+`</h6>
                 
-                    <button type="button" id="place" value=`+i+` onclick="getvalue(this.value)"  data-toggle="modal" data-target="#myModal"><img class="img-fluid" style="width: 80px;height: 80px;" src="static/img/p.png" alt="alternative"></button>
+                    <button style="background-color:white;border:0" type="button" id="place" value=`+i+` onclick="getvalue(this.value)"  data-toggle="modal" data-target="#myModal"><img class="img-fluid" style="width: 80px;height: 80px;" src="static/img/p.png" alt="alternative"></button>
 
                     </div>
                     </div>
                 `
                 }
-                NnoParking--;
+
+                if(i%4==0){
+
+                    html +=  `
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                    <hr style=" height: 1px;
+                    background-image: linear-gradient(90deg, #000, #000 75%, transparent 75%, transparent 100%);
+                    background-size: 20px 1px;
+                    border: none;" class="border02">
+
+                    </div>
+`
+                }
 
             }
 
@@ -59,7 +86,10 @@ $('.selectLoc').on('submit', function(event) {
          </div>
 
 
-         </div>`
+         </div>
+         <br>
+         <br>
+         `
 
 $('#parkingslot').append(html)
        
@@ -73,7 +103,6 @@ $('#parkingslot').append(html)
          console.log("asdas")
         }
         else {
-            console.log(data)
         }
 
     });
@@ -83,19 +112,69 @@ $('#parkingslot').append(html)
 
 
 
+
+function cancelReservation(){
+
+    $.ajax({
+        data : {
+            area : $('#area').val(),
+        },
+        type : 'POST',
+        url : '/Cancel_Reservation',
+        success:function(data) {
+        console.log("deleted")
+         $('#urSlot').empty();
+         
+        }
+    })
+}
+
 function getvalue(val){
 
     document.getElementById("registerSpace").value=val;
 }
 
 
+$(document).on('click', '.number-spinner button', function () {    
+	var btn = $(this),
+		oldValue = btn.closest('.number-spinner').find('input').val().trim(),
+		newVal = 0;
+	
+	if (btn.attr('data-dir') == 'up') {
+        if(oldValue>=20)
+        {
+            newVal=20;
+        }
+        else{
+            newVal = parseInt(oldValue) + 1;
+        }
+	} else {
+		if (oldValue > 1) {
+			newVal = parseInt(oldValue) - 1;
+		} else {
+			newVal = 1;
+		}
+	}
+	btn.closest('.number-spinner').find('input').val(newVal);
+});
+// let map;
+
+// function initMap() {
+//   map = new google.maps.Map(document.getElementById("map"), {
+//     center: { lat: -34.397, lng: 150.644 },
+//     zoom: 8,
+//   });
+// }
+
 
 
 $("#registerSpace").click(function(){
-    
+    console.log(    document.getElementById("hours").value
+    )
     $.ajax({
         data : {
             space : document.getElementById("registerSpace").value,
+            hours : document.getElementById("hours").value,
         },
         type : 'POST',
         url : '/RegisterParkingSpaces',
@@ -113,12 +192,47 @@ $("#registerSpace").click(function(){
         }
 
     });
-
     
-
-
   });
+////////////////////////////Stripe//////////////////////////////////
 
+let stripe = Stripe(
+
+    'pk_test_51J6DmPGbd5hvE4QivXGtK7Ugbvs0dxhSS4uFd2yk5NjYz0VTOsc2v036NRqI9TCIVlHvALcx3owTOxW8221voZm000h0os29Zk'
+    )
+
+$('#checkOut').on('click', function(event) {
+
+    $.ajax({
+        data : {
+            area : "aa"
+        },
+        type : 'POST',
+        url : '/getSessionIDMonth',
+        success:function(data) {
+            console.log(data.sessionID.sessionId);
+                      // Call Stripe.js method to redirect to the new Checkout page
+                      stripe
+                        .redirectToCheckout({
+                          sessionId: data.sessionID.sessionId
+                        })
+                        .then(handleResult);
+         },
+    })
+    .done(function(data) {
+
+        if (data.error) {
+         console.log("error")
+        }
+        else {
+        }
+
+    });
+
+    event.preventDefault();
+});
+
+  ////////////////////////////////////////////////////
 (function($) {
     "use strict"; 
 	
